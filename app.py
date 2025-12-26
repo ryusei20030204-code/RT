@@ -198,8 +198,20 @@ def show_detail_page():
     with tab1:
         st.write(f"**試験科目:** {row.get('試験科目')}")
         st.write(f"**英語要件:** {row.get('英語要件')}")
-        st.write(f"**指定教科書:** {row.get('指定教科書')}")
-        st.markdown(f"👉 [Amazonリンク]({row.get('Amazonリンク')})")
+        
+        # --- ここから変更 ---
+        st.subheader("📘 指定教科書・参考書")
+        book_name = row.get('指定教科書')
+        amazon_url = row.get('Amazonリンク')
+
+        if book_name:
+            st.info(f"指定図書: {book_name}")
+        
+        # リンクがある場合だけ、かっこいいボタンを表示
+        if amazon_url and str(amazon_url).startswith("http"):
+            st.link_button("🛒 Amazonでこの本を見る", amazon_url, type="primary")
+        else:
+            st.caption("※ Amazonリンクはまだ登録されていません")
 
     with tab2:
         st.header("💬 掲示板")
